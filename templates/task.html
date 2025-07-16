@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Задания</title>
+    <style>
+        /* Общий стиль */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
+        header h1 {
+            margin: 0;
+        }
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .task {
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .task p {
+            margin: 10px 0;
+        }
+        .task a {
+            color: #4CAF50;
+            text-decoration: none;
+            word-break: break-word;
+        }
+        .task a:hover {
+            text-decoration: underline;
+        }
+        .copy-btn {
+            align-self: stretch;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+        }
+        .copy-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Медиа-запросы */
+        @media (max-width: 600px) {
+            .task {
+                padding: 10px;
+            }
+            .copy-btn {
+                font-size: 14px;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ваши задания</h1>
+    </header>
+    <main>
+        {% for task in tasks %}
+            <div class="task">
+                <p><strong>Ссылка:</strong> <a href="{{ task.link }}" target="_blank">{{ task.link }}</a></p>
+                <p><strong>Комментарий:</strong> <span class="comment-text">{{ task.comment }}</span></p>
+                <button class="copy-btn" onclick="copyText(this)">Скопировать комментарий</button>
+            </div>
+        {% endfor %}
+    </main>
+    <footer>
+        &copy; 2024 Ваш Проект. Все права защищены.
+    </footer>
+
+    <script>
+        function copyText(button) {
+            const commentText = button.parentElement.querySelector('.comment-text').textContent;
+            navigator.clipboard.writeText(commentText).then(() => {
+                Swal.fire({
+                    title: 'Успех!',
+                    text: 'Комментарий скопирован!',
+                    icon: 'success',
+                    confirmButtonText: 'ОК',
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            }).catch(err => {
+                Swal.fire({
+                    title: 'Ошибка',
+                    text: 'Не удалось скопировать текст.',
+                    icon: 'error',
+                    confirmButtonText: 'ОК'
+                });
+                console.error('Не удалось скопировать текст: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
