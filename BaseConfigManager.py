@@ -7,6 +7,7 @@ logger = Logger.get_logger(__name__)
 
 class BaseConfigManager:
     def __init__(self, config_dir: str, config_name: str, default_config: dict = None):
+        logger.info(f"config_dir: {config_dir}")
         self.config_dir = Path(config_dir).expanduser().resolve()
         self.config_dir.mkdir(parents=True, exist_ok=True)
 

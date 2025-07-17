@@ -6,7 +6,7 @@ from CommentsManagerUI import CommentsManagerUI
 from CommentsManagerUILogic import CommentsManagerUILogic
 from CommentsGeneratorManager import CommentsGeneratorManager
 from InitialDataConfigManager import InitialDataConfigManager
-from archive.app import config_dir
+from BaseConfigManager import BaseConfigManager
 
 from logger_config import Logger
 
@@ -63,6 +63,11 @@ if __name__ == "__main__":
     root_dir_path = get_root_path()
 
     default_dir_paths = create_required_directories(root_dir_path)
+
+    base_config_manager = BaseConfigManager(
+        config_name=CONFIG_NAMES["INITIAL_DATA_CONFIG_NAME"],
+        config_dir=default_dir_paths["DEFAULT_CONFIGS_DIR"]
+    )
 
     commentsManagerApp = CommentsManagerApp(
         default_paths = default_dir_paths
